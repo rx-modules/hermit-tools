@@ -54,6 +54,6 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        name: "auto-voice-regions: ${{ steps.beet-build.outputs.version }}"
+        name: "Auto Voice Regions v${{ steps.beet-build.outputs.version }}"
         tag_name: avr-v${{ steps.beet-build.outputs.version }}
         files: auto_voice_regions/dist/*.zip
