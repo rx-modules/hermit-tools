@@ -131,6 +131,8 @@ def trigger_f(func: Callable):
             func(name)
             scoreboard players reset @a name
             scoreboard players enable @a name
+    append function ~/loop/player:
+        scoreboard players enable @s name
 
 
 @trigger_f
