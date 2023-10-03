@@ -48,14 +48,12 @@ jobs:
       name: Build via Beet
       run: |
         cd auto_voice_regions
-        version=$(sed -n 's/^version: //p' beet.yaml) >> $GITHUB_OUTPUT
         rye run beet
+        echo "version=$(sed -n 's/^version: //p' beet.yaml)" >> $GITHUB_OUTPUT
 
     - name: Release
       uses: softprops/action-gh-release@v1
-      env:
-        VERSION: ${{ steps.beet-build.outputs.version }}
       with:
-        name: "auto-voice-regions: ${{ env.VERSION }}"
-        tag_name: auto_voice_regions-${{ env.VERSION }}
+        name: "auto-voice-regions: ${{ steps.beet-build.outputs.version }}"
+        tag_name: avr-v${{ steps.beet-build.outputs.version }}
         files: auto_voice_regions/dist/*.zip

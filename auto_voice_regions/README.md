@@ -44,4 +44,8 @@ This project uses [`beet`](https://github.com/mcbeet/beet), a python-based build
 
 ## Publishing
 
-TODO
+This repo auto-builds and attaches the built pack to a release when a version is bumped. To publish a new version:
+
+1. Make changes within `auto-voice-regions`
+2. Bump version in `beet.yaml`
+3. Commit and push changes
