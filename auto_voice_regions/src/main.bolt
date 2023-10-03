@@ -81,7 +81,7 @@ function ~/loop:
 
 for coord in coords:
     append function ~/create_groups:
-        raw f'persistentgroup add "{coord.pretty_name}"'
+        raw f'persistentgroup add "{coord.pretty_name}" isolated'
     append function ~/remove_groups:
         raw f'persistentgroup remove "{coord.pretty_name}"'
     append function ~/debug/corner_displays:
