@@ -1,0 +1,94 @@
+{
+    "locations": [
+        {
+            "name": "GRAVEYARD",
+            "origin": "-4815 116 2063",
+            "corner": "-4789 109 2029"
+        },
+        {
+            "name": "TOWN-CENTER",
+            "origin": "-4845 116 2075",
+            "corner": "-4829 109 2099"
+        },
+        {
+            "name": "LAUNDRY",
+            "origin": "-4829 108 2102",
+            "corner": "-4821 115 2107"
+        },
+        {
+            "name": "LIBRARY",
+            "origin": "-4850 108 2098",
+            "corner": "-4856 115 2086"
+        },
+        {
+            "name": "GAMES-MASTER",
+            "origin": "-4834 115 2060",
+            "corner": "-4842 110 2070"
+        },
+        {
+            "name": "BURGER-BAR",
+            "origin": "-4827 110 2073",
+            "corner": "-4818 117 2066"
+        },
+        {
+            "name": "HOUSE-SAND",
+            "origin": "-4804 103 2069",
+            "corner": "-4796 117 2076"
+        },
+        {
+            "name": "HOUSE-MUD",
+            "origin": "-4806 102 2083",
+            "corner": "-4796 116 2090"
+        },
+        {
+            "name": "HOUSE-NETHER",
+            "origin": "-4802 100 2095",
+            "corner": "-4793 116 2102"
+        },
+        {
+            "name": "HOUSE-GREEN",
+            "origin": "-4796 115 2105",
+            "corner": "-4804 102 2115"
+        },
+        {
+            "name": "HOUSE-WHITE",
+            "origin": "-4790 101 2134",
+            "corner": "-4799 114 2127"
+        },
+        {
+            "name": "HOUSE-RED",
+            "origin": "-4803 114 2142",
+            "corner": "-4811 100 2134"
+        },
+        {
+            "name": "HOUSE-BLUE",
+            "origin": "-4819 98 2128",
+            "corner": "-4829 113 2135"
+        },
+        {
+            "name": "HOUSE-STONE",
+            "origin": "-4841 101 2143",
+            "corner": "-4831 114 2130"
+        },
+        {
+            "name": "HOUSE-CHERRY",
+            "origin": "-4853 101 2133",
+            "corner": "-4843 114 2122"
+        },
+        {
+            "name": "HOUSE-WARPED",
+            "origin": "-4861 101 2125",
+            "corner": "-4854 116 2116"
+        },
+        {
+            "name": "HOUSE-CRIMSON",
+            "origin": "-4877 99 2119",
+            "corner": "-4866 113 2110"
+        },
+        {
+            "name": "HOUSE-TAN",
+            "origin": "-4872 102 2095",
+            "corner": "-4863 116 2105"
+        }
+    ]
+}

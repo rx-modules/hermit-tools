@@ -1,0 +1,20 @@
+id: auto_voice_regions
+author: rx97
+
+require:
+  - bolt
+  - beet_plugins.nbt_literals
+  - src.resource_generator
+
+data_pack:
+  load:
+    data/auto_voice_regions/modules: src
+
+pipeline:
+  - mecha
+
+output: dist
+
+meta:
+  bolt:
+    entrypoint: "auto_voice_regions:*"

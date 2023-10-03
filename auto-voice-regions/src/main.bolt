@@ -1,0 +1,208 @@
+from src.utils import Location, allay, Z_FIGHTING_OFFSET
+from minecraft_text_components import minify
+from collections.abc import Callable
+
+coords = Location.parse_coords()
+
+load_message = allay(
+    "[Auto Voice Regions: ](@gray1)"
+    + "[Loaded](@success) "
+    + "[(only you can see this)](@gray2, italic)"
+)
+
+@allay
+def in_region_msg(coord: Location):
+    return "[In %s](%s)" % (coord.pretty_name, coord.color)
+    
+
+def join_region_msg(coord: Location):
+    return minify([
+        allay("[ ](hover_text=<[Auto Voice Regions](@gray1)>)"),
+        allay("[Joined %s](%s)" % (coord.pretty_name, coord.color))
+    ])
+
+
+def left_region_msg(coord: Location):
+    return minify([
+        allay("[ ](hover_text=<[Auto Voice Regions](@gray1)>)"),
+        allay("[Left %s](%s)" % (coord.pretty_name, coord.color))
+    ])
+
+
+function_tag minecraft:load {"values": [(~/load)]}
+
+function ~/load:
+    tellraw rx97 load_message
+    tellraw Xisuma load_message
+
+    function ~/../loop
+
+function ~/reset_region_tags:
+    for coord in coords:
+        tag @a remove pack[f"in_region_{coord}"]
+
+def new_region(coord: Location):
+    in_region_tag = pack[f"in_region_{coord}"]
+    execute
+        if entity @s[tag=!in_region_tag]
+        positioned coord.x coord.y coord.z
+        align xyz
+        if entity @s[
+            dx=coord.dx,
+            dy=coord.dy,
+            dz=coord.dz,
+        ] run function ~/{coord}/join:
+            tag @s add in_region_tag
+            title @s actionbar join_region_msg(coord)
+            raw f'voicechat join "{coord.pretty_name}"'
+    
+    execute
+        if entity @s[tag=in_region_tag]
+        positioned coord.x coord.y coord.z
+        align xyz
+        unless entity @s[
+            dx=coord.dx,
+            dy=coord.dy,
+            dz=coord.dz,
+        ] run function ~/{coord}/leave:
+            tag @s remove in_region_tag
+            title @s actionbar left_region_msg(coord)
+            raw voicechat leave
+
+function ~/loop:
+    schedule function ~/ 5t replace
+
+    execute
+        if score .ENABLED auto_voice_regions.config matches 1
+        as @a run function ~/player:
+            tag @s remove pack.freeze
+            for coord in coords:
+                new_region(coord)
+                title @s[tag=pack[f"in_region_{coord}"]] actionbar in_region_msg(coord)
+
+for coord in coords:
+    append function ~/create_groups:
+        raw f'persistentgroup add "{coord.pretty_name}"'
+    append function ~/remove_groups:
+        raw f'persistentgroup remove "{coord.pretty_name}"'
+    append function ~/debug/corner_displays:
+        execute 
+            positioned coord.x coord.y coord.z
+            align xyz
+            summon block_display:
+                tag @s add pack.corner_displays
+                data merge entity @s {
+                    block_state: {Name: "minecraft:red_stained_glass"},
+                    Glowing: 1b,
+                }
+                team join auto_voice_regions @s
+
+        execute
+            positioned coord.corner.x coord.corner.y coord.corner.z
+            align xyz
+            run summon block_display ~ ~ ~ {
+                block_state: {Name: "minecraft:glass"},
+                Glowing: 1b,
+                Tags: [pack.corner_displays]
+            }
+
+function ~/debug/remove_corner_displays:
+    kill @e[type=block_display, tag=pack.corner_displays]
+
+append function ~/load:
+    team add auto_voice_regions "Auto Voice Regions"
+    team modify auto_voice_regions color red
+
+    execute
+        as rx97
+        if entity @e[type=block_display, tag=pack.display, limit=1]:
+            function ~/../trigger/toggle_voice_regions/kill
+            function ~/../trigger/toggle_voice_regions/summon
+            function ~/../debug/remove_corner_displays
+            function ~/../debug/corner_displays
+
+
+def trigger_f(func: Callable):
+    name = func.__name__
+    append function ~/load:
+        scoreboard objectives add name trigger
+        scoreboard players enable @a name
+    append function ~/loop:
+        as @a[scores={name=1..}, limit=1] function ~/../trigger/{name}:
+            func(name)
+            scoreboard players reset @a name
+            scoreboard players enable @a name
+
+
+@trigger_f
+def toggle_voice_regions(name: str):
+    unless score .ENABLED f"auto_voice_regions.config" matches 1
+        tellraw @s minify([
+            allay("[→ ](@gray2, hover_text=<[Auto Voice Regions](@gray1)>)"),
+            allay("[Auto Voice Regions is disabled](@error)"),
+            "\n",
+            [
+                allay("[Use](@gray2)"),
+                " ",
+                allay('[`/trigger auto_voice_regions`](run="/trigger auto_voice_regions", hover_text=<[Click](@gray2)>)'),
+                " to enable",
+            ]
+        ])
+    if score .ENABLED f"auto_voice_regions.config" matches 1:
+        if entity @e[type=block_display, tag=pack.display, limit=1] function ~/kill:
+            tellraw @s minify([
+                allay("[→ ](@gray2, hover_text=<[Auto Voice Regions](@gray1)>)"),
+                allay("[Killed Region Displays](@error)")
+            ])
+            kill @e[type=block_display, tag=pack.display]
+            scoreboard players add @s[scores={name=1}] name 1
+
+        unless entity @s[scores={name=2..}]
+            unless entity @e[type=block_display, tag=pack.display, limit=1] function ~/summon:
+            tellraw @s minify([
+                allay("[→ ](@gray2, hover_text=<[Auto Voice Regions](@gray1)>)"),
+                allay("[Summoned Region Displays](@success)")
+            ])
+            for coord in coords:
+                execute 
+                    positioned coord.x (coord.y + 1) coord.z
+                    align xyz
+                    run summon block_display ~-Z_FIGHTING_OFFSET ~-Z_FIGHTING_OFFSET ~-Z_FIGHTING_OFFSET
+                    {
+                        block_state: {Name: "minecraft:white_stained_glass"},
+                        transformation:{
+                            left_rotation: [0f,0f,0f,1f],
+                            right_rotation: [0f,0f,0f,1f],
+                            translation: [0f,0f,0f],
+                            scale: coord.scale,
+                        },
+                        view_range: 64f,
+                        shadow_radius: 0f,
+                        shadow_strength: 0f,
+                        brightness: {sky: 15, block: 15},
+                        Tags: [pack.display]
+                    }
+
+append function ~/load:
+    scoreboard objectives add auto_voice_regions.config dummy
+    scoreboard players set .-1 auto_voice_regions.config -1
+    unless score .ENABLED auto_voice_regions.config matches -10..10
+        scoreboard players set .ENABLED auto_voice_regions.config -1
+
+
+@trigger_f
+def auto_voice_regions(name):
+    scoreboard players operation .ENABLED f"auto_voice_regions.config" *= .-1 f"auto_voice_regions.config"
+
+    if score .ENABLED f"auto_voice_regions.config" matches 1:
+        tellraw @s minify([
+            allay("[→ ](@gray2, hover_text=<[Auto Voice Regions](@gray1)>)"),
+            allay("[Auto Voice Regions: Enabled](@success)")
+        ])
+    unless score .ENABLED f"auto_voice_regions.config" matches 1:
+        function ~/../../trigger/toggle_voice_regions/kill
+        function ~/../../debug/remove_corner_displays
+        tellraw @s minify([
+            allay("[→ ](@gray2, hover_text=<[Auto Voice Regions](@gray1)>)"),
+            allay("[Auto Voice Regions: Disabled](@error)")
+        ])

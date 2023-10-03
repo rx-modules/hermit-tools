@@ -1,0 +1,4 @@
+dist/
+__pycache__
+.beet_cache
+.DS_Store
