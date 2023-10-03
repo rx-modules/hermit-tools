@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - auto_voice_regions
+      - auto_voice_regions/**
 
   workflow_dispatch:
 

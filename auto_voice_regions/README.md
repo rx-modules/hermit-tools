@@ -33,14 +33,14 @@ This project uses [`beet`](https://github.com/mcbeet/beet), a python-based build
 
 1. Have a working Python 3.10+ environment (many systems come w/ this pre-installed)
 2. Install `beet` via `pip`, a python package manager
-    - `pip install beet` or `python -m pip install beet`
+  - `pip install beet` or `python -m pip install beet`
 3. Clone this repo
-    - `git clone https://github.com/rx-modules/hermit-tools`
+  - `git clone https://github.com/rx-modules/hermit-tools`
 4. Navigate to this subfolder and run `beet`
-    -   ```bash
-        cd hermit-tools/auto-voice-regions
-        beet  # or python -m beet
-        ```
+  - ```bash
+      cd hermit-tools/auto-voice-regions
+      beet  # or python -m beet
+    ```
 
 ## Publishing
 
