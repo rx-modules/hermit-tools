@@ -6,9 +6,9 @@
 > **Important**
 > [Simple Voice Mod](https://modrinth.com/plugin/simple-voice-chat) and [Enchanced Groups](https://modrinth.com/mod/enhanced-groups) must be installed on the server for this pack
 
-1. Grab the data pack from [here](https://github.com/rx-modules/hermit-tools/release) and load it into your world.
+1. Grab the data pack from [here](https://github.com/rx-modules/hermit-tools/releases/tag/avr-v1.0) and load it into your world.
 2. Run `/trigger auto_voice_regions` to turn on the data pack
-3. Regions defined in the `coords.json` file will now dynamically control the voice groups of players.
+3. Regions defined in the `src/config.json` file will now dynamically control the voice groups of players.
 
 ### Triggers
 
@@ -32,8 +32,8 @@
 This project uses [`beet`](https://github.com/mcbeet/beet), a python-based build tool to help create data and resource packs. The repo holds uncompiled code that is transformed to vanilla commands. To build the pack:
 
 1. Have a working Python 3.10+ environment (many systems come w/ this pre-installed)
-2. Install `beet` via `pip`, a python package manager
-  - `pip install beet` or `python -m pip install beet`
+2. Install the requirements via `pip`, a python package manager
+  - `pip install -r requirements.lock` or `python -m pip install -r requirements.lock`
 3. Clone this repo
   - `git clone https://github.com/rx-modules/hermit-tools`
 4. Navigate to this subfolder and run `beet`
