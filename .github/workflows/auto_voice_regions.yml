@@ -48,7 +48,7 @@ jobs:
       name: Build via Beet
       run: |
         cd auto_voice_regions
-        rye run beet
+        rye run beet --set data_pack.zipped=true
         echo "version=$(sed -n 's/^version: //p' beet.yaml)" >> $GITHUB_OUTPUT
 
     - name: Release

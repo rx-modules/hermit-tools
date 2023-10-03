@@ -8,7 +8,6 @@ require:
   - src.resource_generator
 
 data_pack:
-  # zipped: true
   load:
     data/auto_voice_regions/modules: src
 
