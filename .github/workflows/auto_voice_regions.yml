@@ -1,0 +1,62 @@
+name: Release Packages
+
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - auto_voice_regions
+
+  workflow_dispatch:
+
+env:
+  MC_VERSION: '1.20'
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+
+    #----------------------------------------------
+    #            Setup Build Environment
+    #----------------------------------------------
+
+    - name: Checkout 'main'
+      uses: actions/checkout@v3
+
+    - name: Install the latest version of rye
+      uses: eifinger/setup-rye@v1
+      with:
+        enable-cache: true
+        cache-prefix: 'python-rye'
+
+    #----------------------------------------------
+    #  -----  install & configure poetry  -----
+    #----------------------------------------------
+
+    - name: Install Deps
+      run: |
+        cd auto_voice_regions
+        rye sync
+
+    #----------------------------------------------
+    #       Build packs and make release
+    #----------------------------------------------
+    
+    - id: beet-build
+      name: Build via Beet
+      run: |
+        cd auto_voice_regions
+        version=$(sed -n 's/^version: //p' beet.yaml) >> $GITHUB_OUTPUT
+        rye run beet
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      env:
+        VERSION: ${{ steps.beet-build.outputs.version }}
+      with:
+        name: "auto-voice-regions: ${{ env.VERSION }}"
+        tag_name: auto_voice_regions-${{ env.VERSION }}
+        files: auto_voice_regions/dist/*.zip

@@ -4,7 +4,7 @@
 ## Usage
 
 > **Important**
-> [Simple Voice Mod](https://modrinth.com/plugin/simple-voice-chat) and [Enchanced Groups](https://modrinth.com/mod/enhanced-groups) must be installed on the server
+> [Simple Voice Mod](https://modrinth.com/plugin/simple-voice-chat) and [Enchanced Groups](https://modrinth.com/mod/enhanced-groups) must be installed on the server for this pack
 
 1. Grab the data pack from [here](https://github.com/rx-modules/hermit-tools/release) and load it into your world.
 2. Run `/trigger auto_voice_regions` to turn on the data pack
@@ -42,3 +42,6 @@ This project uses [`beet`](https://github.com/mcbeet/beet), a python-based build
         beet  # or python -m beet
         ```
 
+## Publishing
+
+TODO

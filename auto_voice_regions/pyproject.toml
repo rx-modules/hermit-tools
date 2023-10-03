@@ -1,0 +1,27 @@
+[project]
+name = "auto-voice-regions"
+version = "1.0"
+authors = [
+    { name = "rx97" }
+]
+dependencies = [
+    "beet>=0.80.1",
+    "mecha>=0.58.1",
+    "bolt>=0.20.1",
+    "beet-plugins @ git+https://github.com/thewii/beet-plugins@main",
+    "allay>=1.3.0",
+    "minecraft_text_components>=3.1.2",
+]
+readme = "README.md"
+requires-python = ">= 3.10"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true

@@ -5,9 +5,8 @@ from collections.abc import Callable
 coords = Location.parse_coords()
 
 load_message = allay(
-    "[Auto Voice Regions: ](@gray1)"
-    + "[Loaded](@success) "
-    + "[(only you can see this)](@gray2, italic)"
+    f"[auto-voice-regions v{ctx.project_version}: ](@gray1)"
+    + "[Loaded](@success)"
 )
 
 @allay
