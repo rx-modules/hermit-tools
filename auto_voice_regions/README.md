@@ -4,11 +4,13 @@
 ## Usage
 
 > **Important**
-> [Simple Voice Mod](https://modrinth.com/plugin/simple-voice-chat) and [Enchanced Groups](https://modrinth.com/mod/enhanced-groups) must be installed on the server for this pack
+> [Simple Voice Mod v2.4.25+](https://modrinth.com/plugin/simple-voice-chat) and [Enchanced Groups v1.4.0+](https://modrinth.com/mod/enhanced-groups) must be installed on the server for this pack.
 
 1. Grab the data pack from [here](https://github.com/rx-modules/hermit-tools/releases/tag/avr-v1.0) and load it into your world.
-2. Run `/trigger auto_voice_regions` to turn on the data pack
-3. Regions defined in the `src/config.json` file will now dynamically control the voice groups of players.
+2. Run `/function auto_voice_regions:main/create_groups`
+   - You *may* need to restart your **game** or server for the groups to work w/ the data pack
+3. Run `/trigger auto_voice_regions` to turn on the data pack
+4. Regions defined in the `src/config.json` file will now dynamically control the voice groups of players.
 
 ### Triggers
 
