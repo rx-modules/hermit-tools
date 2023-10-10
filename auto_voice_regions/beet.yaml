@@ -1,6 +1,6 @@
 id: auto_voice_regions
 author: rx97
-version: 1.3
+version: 1.4
 
 require:
   - bolt

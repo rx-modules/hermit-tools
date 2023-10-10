@@ -65,15 +65,15 @@ class Location:
 
     @cached_property
     def alt_x(self):
-        return self.corner.x
+        return self.corner.x + 1
 
     @cached_property
     def alt_y(self):
-        return self.corner.y
+        return self.corner.y + 1
 
     @cached_property
     def alt_z(self):
-        return self.corner.z
+        return self.corner.z + 1
 
     @cached_property
     def dxdydz(self):
@@ -105,9 +105,9 @@ class Location:
     def scale_alt(self):
         return List(
             [
-                Float(-self.dx + 1 - (Z_FIGHTING_OFFSET * 2)),
-                Float(-self.dy + 1 - (Z_FIGHTING_OFFSET * 2)),
-                Float(-self.dz + 1 - (Z_FIGHTING_OFFSET * 2)),
+                Float(-self.dx - 1 - (Z_FIGHTING_OFFSET * 2)),
+                Float(-self.dy - 1 - (Z_FIGHTING_OFFSET * 2)),
+                Float(-self.dz - 1 - (Z_FIGHTING_OFFSET * 2)),
             ]
         )
 
