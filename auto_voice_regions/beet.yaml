@@ -1,8 +1,9 @@
 id: auto_voice_regions
 author: rx97
-version: 1.4
+version: 1.5
 
 require:
+  - beet_plugins.root_location
   - bolt
   - beet_plugins.nbt_literals
   - src.resource_generator
@@ -17,5 +18,6 @@ pipeline:
 output: dist
 
 meta:
+  generate_path: "{namespace}:main/{path}"
   bolt:
     entrypoint: "auto_voice_regions:*"

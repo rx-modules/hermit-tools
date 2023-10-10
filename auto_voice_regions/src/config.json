@@ -7,7 +7,7 @@
         },
         {
             "name": "TOWN-CENTER",
-            "origin": "-4845 116 2075",
+            "origin": "-4846 116 2074",
             "corner": "-4829 109 2099"
         },
         {
@@ -48,7 +48,7 @@
         {
             "name": "HOUSE-GREEN",
             "origin": "-4796 115 2105",
-            "corner": "-4804 102 2115"
+            "corner": "-4804 102 2116"
         },
         {
             "name": "HOUSE-WHITE",
@@ -58,7 +58,7 @@
         {
             "name": "HOUSE-RED",
             "origin": "-4803 114 2142",
-            "corner": "-4811 100 2134"
+            "corner": "-4812 100 2134"
         },
         {
             "name": "HOUSE-BLUE",

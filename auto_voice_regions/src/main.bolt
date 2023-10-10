@@ -40,33 +40,43 @@ function ~/reset_region_tags:
     for coord in coords:
         tag @a remove pack[f"in_region_{coord}"]
 
-def new_region(coord: Location):
-    in_region_tag = pack[f"in_region_{coord}"]
-    execute
-        if entity @s[tag=!in_region_tag]
-        positioned coord.x coord.y coord.z
-        align xyz
-        if entity @s[
-            dx=coord.dx,
-            dy=coord.dy,
-            dz=coord.dz,
-        ] run function ~/{coord}/join:
-            tag @s add in_region_tag
-            title @s actionbar join_region_msg(coord)
-            raw f'voicechat join "{coord.pretty_name}"'
+function ~/reset_region_tags/player:
+    for coord in coords:
+        tag @s remove pack[f"in_region_{coord}"]
+
+def new_regions(coord: Location):
+    for coord in coords:
+        in_region_tag = pack[f"in_region_{coord}"]
+        execute
+            if entity @s[tag=!in_region_tag]
+            positioned coord.x coord.y coord.z
+            align xyz
+            if entity @s[
+                dx=coord.dx,
+                dy=coord.dy,
+                dz=coord.dz,
+            ] run function ~/{coord}/join:
+                function /reset_region_tags/player
+                tag @s add in_region_tag
+                title @s actionbar join_region_msg(coord)
+                raw f'voicechat join "{coord.pretty_name}"'
     
-    execute
-        if entity @s[tag=in_region_tag]
-        positioned coord.x coord.y coord.z
-        align xyz
-        unless entity @s[
-            dx=coord.dx,
-            dy=coord.dy,
-            dz=coord.dz,
-        ] run function ~/{coord}/leave:
-            tag @s remove in_region_tag
-            title @s actionbar left_region_msg(coord)
-            raw voicechat leave
+    for coord in coords:
+        in_region_tag = pack[f"in_region_{coord}"]
+        execute
+            if entity @s[tag=in_region_tag]
+            positioned coord.x coord.y coord.z
+            align xyz
+            unless entity @s[
+                dx=coord.dx,
+                dy=coord.dy,
+                dz=coord.dz,
+            ] run function ~/{coord}/leave:
+                tag @s remove in_region_tag
+                title @s actionbar left_region_msg(coord)
+                raw voicechat leave
+
+    title @s[tag=pack[f"in_region_{coord}"]] actionbar in_region_msg(coord)
 
 function ~/loop:
     schedule function ~/ 5t replace
@@ -75,9 +85,7 @@ function ~/loop:
         if score .ENABLED auto_voice_regions.config matches 1
         as @a run function ~/player:
             tag @s remove pack.freeze
-            for coord in coords:
-                new_region(coord)
-                title @s[tag=pack[f"in_region_{coord}"]] actionbar in_region_msg(coord)
+            new_regions(coord)
 
 for coord in coords:
     append function ~/create_groups:
