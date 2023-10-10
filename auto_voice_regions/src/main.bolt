@@ -166,7 +166,7 @@ def toggle_voice_regions(name: str):
             ])
             for coord in coords:
                 execute 
-                    positioned coord.x (coord.y + 1) coord.z
+                    positioned coord.x coord.y coord.z
                     align xyz
                     run summon block_display ~-Z_FIGHTING_OFFSET ~-Z_FIGHTING_OFFSET ~-Z_FIGHTING_OFFSET
                     {
@@ -176,6 +176,24 @@ def toggle_voice_regions(name: str):
                             right_rotation: [0f,0f,0f,1f],
                             translation: [0f,0f,0f],
                             scale: coord.scale,
+                        },
+                        view_range: 64f,
+                        shadow_radius: 0f,
+                        shadow_strength: 0f,
+                        brightness: {sky: 15, block: 15},
+                        Tags: [pack.display]
+                    }
+                execute 
+                    positioned coord.alt_x coord.alt_y coord.alt_z
+                    align xyz
+                    run summon block_display ~Z_FIGHTING_OFFSET ~Z_FIGHTING_OFFSET ~Z_FIGHTING_OFFSET
+                    {
+                        block_state: {Name: "minecraft:light_gray_stained_glass"},
+                        transformation:{
+                            left_rotation: [0f,0f,0f,1f],
+                            right_rotation: [0f,0f,0f,1f],
+                            translation: [0f,0f,0f],
+                            scale: coord.scale_alt,
                         },
                         view_range: 64f,
                         shadow_radius: 0f,

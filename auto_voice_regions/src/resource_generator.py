@@ -56,7 +56,7 @@ class ResourceGenerator:
 
         if len(generated) > 1:
             return generated
-        
+
         return generated.pop()
 
     def __neg__(self):
