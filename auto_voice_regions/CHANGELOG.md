@@ -1,7 +1,9 @@
 ## 1.5
 > Oct 10 2023
 
-- Make inner regions much more seemless
+- Adjust padding for many regions (basements fixed, etc)
+- Fix regions that are side-by-side
+  - If two regions are next to each other, you properly be moved to the new group
 
 ## 1.4
 > Oct 10 2023
